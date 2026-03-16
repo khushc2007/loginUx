@@ -21,17 +21,24 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
     const context = canvas.getContext("2d")
     if (!context) return
 
-    // Set up responsive dimensions
-    const containerWidth = Math.min(width, window.innerWidth - 40)
-    const containerHeight = Math.min(height, window.innerHeight - 100)
-    const radius = Math.min(containerWidth, containerHeight) / 2.5
+    const setupCanvas = () => {
+      const parent = canvas.parentElement
+      const parentWidth = parent ? parent.clientWidth : Math.min(width, window.innerWidth - 32)
+      const containerWidth = Math.min(width, parentWidth)
+      const containerHeight = Math.round(containerWidth * (height / width))
+      const radius = Math.min(containerWidth, containerHeight) / 2.5
 
-    const dpr = window.devicePixelRatio || 1
-    canvas.width = containerWidth * dpr
-    canvas.height = containerHeight * dpr
-    canvas.style.width = `${containerWidth}px`
-    canvas.style.height = `${containerHeight}px`
-    context.scale(dpr, dpr)
+      const dpr = window.devicePixelRatio || 1
+      canvas.width = containerWidth * dpr
+      canvas.height = containerHeight * dpr
+      canvas.style.width = `${containerWidth}px`
+      canvas.style.height = `${containerHeight}px`
+      context.scale(dpr, dpr)
+
+      return { containerWidth, containerHeight, radius }
+    }
+
+    let { containerWidth, containerHeight, radius } = setupCanvas()
 
     // Create projection and path generator for Canvas
     const projection = d3
@@ -323,6 +330,18 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
       lastMousePos = null
     }
 
+    // Handle resize
+    const resizeObserver = new ResizeObserver(() => {
+      const newDims = setupCanvas()
+      containerWidth = newDims.containerWidth
+      containerHeight = newDims.containerHeight
+      radius = newDims.radius
+      const dpr = window.devicePixelRatio || 1
+      context.setTransform(dpr, 0, 0, dpr, 0, 0)
+      projection.scale(radius).translate([containerWidth / 2, containerHeight / 2])
+    })
+    if (canvas.parentElement) resizeObserver.observe(canvas.parentElement)
+
     canvas.addEventListener("mousedown", handleMouseDown)
     document.addEventListener("mousemove", handleMouseMove)
     document.addEventListener("mouseup", handleMouseUp)
@@ -336,6 +355,7 @@ export default function RotatingEarth({ width = 800, height = 600, className = "
 
     return () => {
       cancelAnimationFrame(animationId)
+      resizeObserver.disconnect()
       canvas.removeEventListener("mousedown", handleMouseDown)
       document.removeEventListener("mousemove", handleMouseMove)
       document.removeEventListener("mouseup", handleMouseUp)

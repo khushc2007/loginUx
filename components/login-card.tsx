@@ -135,7 +135,7 @@ export default function LoginCard() {
         />
       )}
 
-      <div className="relative z-10 p-8 md:p-10">
+      <div className="relative z-10 p-5 sm:p-8 md:p-10">
         {/* Brand */}
         <div className="flex items-center gap-2.5 mb-8">
           <div
@@ -160,7 +160,7 @@ export default function LoginCard() {
 
         {/* Heading */}
         <div className="mb-6">
-          <h1 className="text-2xl font-semibold text-white mb-1.5 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-semibold text-white mb-1.5 tracking-tight">
             {mode === "signin" ? "Welcome back" : "Create account"}
           </h1>
           <p className="text-sm" style={{ color: "rgba(255,255,255,0.42)" }}>
@@ -196,7 +196,7 @@ export default function LoginCard() {
         <button
           onClick={handleGoogle}
           disabled={isLoading}
-          className="w-full flex items-center justify-center gap-2.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-200 mb-5"
+          className="w-full flex items-center justify-center gap-2.5 py-3 rounded-xl text-sm font-medium transition-all duration-200 mb-5"
           style={{
             background: "rgba(255,255,255,0.055)",
             border: "1px solid rgba(255,255,255,0.1)",
@@ -263,7 +263,7 @@ export default function LoginCard() {
                 <input
                   type="text" value={name} onChange={(e) => setName(e.target.value)}
                   placeholder="Your full name" required
-                  className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm outline-none transition-all duration-200"
+                  className="w-full pl-9 pr-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
                   style={inputStyle} onFocus={onFocusInput} onBlur={onBlurInput}
                 />
               </div>
@@ -281,7 +281,7 @@ export default function LoginCard() {
               <input
                 type="email" value={email} onChange={(e) => setEmail(e.target.value)}
                 placeholder="you@company.com" required
-                className="w-full pl-9 pr-4 py-2.5 rounded-xl text-sm outline-none transition-all duration-200"
+                className="w-full pl-9 pr-4 py-3 rounded-xl text-sm outline-none transition-all duration-200"
                 style={inputStyle} onFocus={onFocusInput} onBlur={onBlurInput}
               />
             </div>
@@ -312,7 +312,7 @@ export default function LoginCard() {
                 type={showPassword ? "text" : "password"}
                 value={password} onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••" required minLength={6}
-                className="w-full pl-9 pr-10 py-2.5 rounded-xl text-sm outline-none transition-all duration-200"
+                className="w-full pl-9 pr-10 py-3 rounded-xl text-sm outline-none transition-all duration-200"
                 style={inputStyle} onFocus={onFocusInput} onBlur={onBlurInput}
               />
               <button
@@ -338,7 +338,7 @@ export default function LoginCard() {
 
           <button
             type="submit" disabled={isLoading}
-            className="w-full py-2.5 rounded-xl text-sm font-semibold transition-all duration-200 mt-2"
+            className="w-full py-3 rounded-xl text-sm font-semibold transition-all duration-200 mt-2"
             style={{
               background: isLoading
                 ? "rgba(6,182,212,0.25)"

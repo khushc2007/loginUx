@@ -120,8 +120,32 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+    -webkit-tap-highlight-color: transparent;
+    box-sizing: border-box;
   }
   body {
     @apply bg-background text-foreground;
+    /* Prevent iOS bounce scroll on the body */
+    overscroll-behavior: none;
+  }
+  /* Prevent mobile zoom on input focus (iOS Safari) */
+  input, textarea, select {
+    font-size: 16px !important;
+  }
+  /* Smooth scrolling for the whole page */
+  html {
+    scroll-behavior: smooth;
+    /* Use dynamic viewport height to handle mobile browser chrome */
+    height: -webkit-fill-available;
+  }
+  body {
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
+    min-height: 100dvh;
+  }
+  /* Better touch targets */
+  button, [role="button"] {
+    touch-action: manipulation;
+    cursor: pointer;
   }
 }

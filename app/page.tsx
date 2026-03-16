@@ -44,14 +44,14 @@ function TypewriterQuotes() {
   const quote = QUOTES[quoteIndex]
 
   return (
-    <div className="text-center px-6 max-w-sm mx-auto min-h-[80px]">
-      <p className="text-white/70 text-sm leading-relaxed font-light italic">
+    <div className="text-center px-4 max-w-xs mx-auto min-h-[56px]">
+      <p className="text-white/70 text-xs sm:text-sm leading-relaxed font-light italic">
         &ldquo;{displayed}
         <span className="inline-block w-px h-[1em] bg-cyan-400/80 ml-0.5 align-middle animate-pulse" />
         &rdquo;
       </p>
       {phase === "pause" && quote.author && (
-        <p className="text-white/35 text-xs mt-2 tracking-wide">{quote.author}</p>
+        <p className="text-white/35 text-[10px] sm:text-xs mt-1 tracking-wide">{quote.author}</p>
       )}
     </div>
   )
@@ -128,27 +128,21 @@ export default function Home() {
         }
       `}</style>
 
-      {/*
-        Layout logic:
-        - Mobile (default):  single column, globe on top (smaller), login card below
-        - Desktop (lg+):     two columns side by side — globe LEFT, login card RIGHT
-        
-        We use flex-col on mobile and flex-row on lg.
-        The order classes control which appears first on mobile.
-      */}
-      <div className="relative z-10 flex flex-col lg:flex-row min-h-screen">
+      {/* ── Layout: single-column on mobile, two-column on desktop ── */}
+      <div className="relative z-10 flex flex-col lg:flex-row min-h-screen min-h-[100dvh]">
 
-        {/* ── LEFT on desktop / TOP on mobile: Globe + Quotes ── */}
+        {/* ── TOP on mobile / LEFT on desktop: Globe + Quotes ── */}
         <div className="
-          flex-1 flex flex-col items-center justify-center
-          px-6 pt-10 pb-4
+          flex-none lg:flex-1 flex flex-col items-center justify-center
+          px-4 pt-8 pb-2
+          sm:px-6 sm:pt-10 sm:pb-4
           lg:px-10 lg:py-14
           order-1
         ">
           {/* Glow halo behind globe */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div
-              className="w-[420px] h-[420px] rounded-full blur-[80px]"
+              className="w-[300px] h-[300px] sm:w-[420px] sm:h-[420px] rounded-full blur-[80px]"
               style={{ background: "rgba(6,182,212,0.07)" }}
             />
           </div>
@@ -158,20 +152,21 @@ export default function Home() {
             <RotatingEarth
               width={560}
               height={460}
-              className="w-full max-w-[300px] sm:max-w-[400px] lg:max-w-[560px]"
+              className="w-full max-w-[220px] sm:max-w-[360px] lg:max-w-[560px]"
             />
           </div>
 
-          {/* Typewriter quotes — hidden on very small screens to save space */}
-          <div className="relative z-10 hidden sm:block">
+          {/* Typewriter quotes — shown on sm+ */}
+          <div className="relative z-10 hidden sm:block mt-2">
             <TypewriterQuotes />
           </div>
         </div>
 
-        {/* ── RIGHT on desktop / BOTTOM on mobile: Login card ── */}
+        {/* ── BOTTOM on mobile / RIGHT on desktop: Login card ── */}
         <div className="
           flex-1 flex items-center justify-center
-          px-6 pb-10 pt-4
+          px-4 pb-8 pt-2
+          sm:px-6 sm:pb-10 sm:pt-4
           lg:px-14 lg:py-14
           order-2
         ">
